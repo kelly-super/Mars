@@ -1,0 +1,7 @@
+﻿{
+  "url": "http://localhost:5000/",
+  "profileUrl": "http://localhost:5000/Account/Profile",
+  "username": "kellycc677@gmail.com",
+  "password": "123456",
+  "browserType": "chrome"
+}
