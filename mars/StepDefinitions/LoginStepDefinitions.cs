@@ -18,7 +18,11 @@ namespace Mars.StepDefinitions
         HomePage homePage;
 
 
-       
+        public LoginStepDefinitions(FeatureContext featureContext) : base(featureContext)
+        {
+
+        }
+
         [Given(@"navigates to the login page")]
         public void GivenNavigatesToTheLoginPage()
         {
@@ -31,18 +35,30 @@ namespace Mars.StepDefinitions
         [When(@"enter valid credentials and click the login button")]
         public void WhenEnterValidCredentialsAndClickTheLoginButton()
         {
-            string email = GetApplictionConfig("username");
-            string password = GetApplictionConfig("password");
-            loginPage = new LoginPage();
-            loginPage.ClickLoginButton(driver,email, password);
+            if (!IsUserLoggedIn())
+            {
+                string email = GetApplictionConfig("username");
+                string password = GetApplictionConfig("password");
+                loginPage = new LoginPage();
+                loginPage.ClickLoginButton(driver, email, password);
+                SetUserLoggedIn(true);
+                Console.WriteLine("User logged in successfully.");
+            }
+            else
+            {
+                Console.WriteLine("User is already logged in, skipping login.");
+            }
+           
         }
 
         [Then(@"should be redirected to the profile page")]
         public void ThenShouldBeRedirectedToTheProfilePage()
         {
+
             string profileUrl = GetApplictionConfig("profileUrl");
             string currentUrl = driver.Url;
             Assert.True(profileUrl.Equals(currentUrl));
+            Assert.IsTrue(IsUserLoggedIn(),"user logged in succeeded");
         }
 
     }

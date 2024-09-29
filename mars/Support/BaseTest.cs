@@ -14,7 +14,14 @@ namespace Mars.Support
     public class BaseTest
     {
         public static IWebDriver driver;
-        public IWebDriver GetWebDriver() 
+        private readonly FeatureContext _featureContext;
+        public BaseTest(FeatureContext featureContext)
+        {
+
+            _featureContext = featureContext;
+        }
+
+        public static IWebDriver GetWebDriver() 
         { 
             if(driver ==null)
             {
@@ -23,7 +30,7 @@ namespace Mars.Support
             return driver; 
         }
 
-        public void GetNewWebDriver()
+        public static void GetNewWebDriver()
         {
             string browserType = GetApplictionConfig("browserType");
             switch (browserType.ToLower())
@@ -45,7 +52,7 @@ namespace Mars.Support
             }
             driver.Manage().Window.Maximize();
         }
-        public string GetApplictionConfig(string key)
+        public static string GetApplictionConfig(string key)
         {
             //get AppConfig.json directory
 
@@ -54,6 +61,17 @@ namespace Mars.Support
             string jsonContent = File.ReadAllText(configPath);
             JObject jsonData = JObject.Parse(jsonContent);
             return jsonData[key].ToString();
+        }
+
+        public bool IsUserLoggedIn()
+        {
+            return _featureContext.ContainsKey("IsLoggedIn") && (bool)_featureContext["IsLoggedIn"];
+
+        }
+
+        public void SetUserLoggedIn(bool isLoggedIn)
+        {
+            _featureContext["IsLoggedIn"] = isLoggedIn;
         }
     }
 }

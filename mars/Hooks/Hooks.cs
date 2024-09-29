@@ -1,36 +1,85 @@
-﻿using Mars.Support;
+﻿using AngleSharp.Text;
+using Mars.Pages;
+using Mars.Support;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 
 namespace Mars.Hooks
 {
     [Binding]
-    public sealed class Hooks
+    public sealed class Hooks: BaseTest
     {
-        // For additional details on SpecFlow hooks see http://go.specflow.org/doc-hooks
+        //We will use the [BeforeFeature] and [AfterFeature] hooks to manage WebDriver initialization and login only once for the entire feature. 
 
-        public IWebDriver driver;
+       
+        public readonly FeatureContext _featureContext;
 
-        [BeforeScenario("@tag1")]
-        public void BeforeScenarioWithTag()
+        public Hooks(FeatureContext featureContext) : base(featureContext) { }
+
+        [BeforeScenario("@LoginRequired")]
+        public void BeforeScenarioWithLogin()
         {
             
+
         }
+
+        public static void PerformLogin()
+        {
+
+            string url = GetApplictionConfig("url");
+            driver.Navigate().GoToUrl(url);
+            HomePage homePage = new HomePage();
+            homePage.ClickSignInLink(driver);
+
+            string email = GetApplictionConfig("username");
+            string password = GetApplictionConfig("password");
+            LoginPage loginPage = new LoginPage();
+            loginPage.ClickLoginButton(driver, email, password);
+        }
+
 
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario()
         {
-            driver = new BaseTest().GetWebDriver();
+           
+
+        }
+        [BeforeScenario]
+        public void BeforeScenario()
+        {
+         
+        }
+
+        [BeforeFeature]
+        public static void BeforeFeature(FeatureContext featureContext)
+        {
+            //Initialize WebDriver only once for the entire feature
+            GetWebDriver();
+            // Check if the feature has the @NoBeforeFeature tag
+            bool skipBeforeFeature = featureContext.FeatureInfo.Tags.Contains("NoBeforeFeature");
+            if (skipBeforeFeature) {
+
+                Console.WriteLine(" Skipping BeforeFeature hook fo this feature");
+                return;
+            }
+
+            // Log in only once for the entire feature
+            BaseTest baseTestInstance = new BaseTest(featureContext);
+            if (!baseTestInstance.IsUserLoggedIn())
+            {
+                PerformLogin();
+                baseTestInstance.SetUserLoggedIn(true);
+            }
 
 
         }
-
-        [AfterScenario]
-        public void AfterScenario()
+        [AfterFeature]
+        public static void AfterFeature()
         {
             if (driver != null)
             {
                 driver.Quit();
+                driver = null;
             }
         }
     }

@@ -20,9 +20,9 @@ namespace Mars.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Mars login feature")]
+    [NUnit.Framework.DescriptionAttribute("People can see what languages and skills I have")]
     [NUnit.Framework.CategoryAttribute("NoBeforeFeature")]
-    public partial class MarsLoginFeatureFeature
+    public partial class PeopleCanSeeWhatLanguagesAndSkillsIHaveFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
@@ -30,15 +30,15 @@ namespace Mars.Features
         private string[] _featureTags = new string[] {
                 "NoBeforeFeature"};
         
-#line 1 "Login.feature"
+#line 1 "Search.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Mars login feature", "As a registerred user\r\nI want to log in to the application\r\nSo that i can access " +
-                    "my personalized profile", ProgrammingLanguage.CSharp, new string[] {
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "People can see what languages and skills I have", "  As a user, I want to search for skills on the market, so that I can view resour" +
+                    "ces matching my skills and languages.", ProgrammingLanguage.CSharp, new string[] {
                         "NoBeforeFeature"});
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -78,16 +78,16 @@ namespace Mars.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("login with valid Credentials")]
-        [NUnit.Framework.CategoryAttribute("regression")]
-        public virtual void LoginWithValidCredentials()
+        [NUnit.Framework.DescriptionAttribute("Display resources matching entered skill and languages")]
+        [NUnit.Framework.CategoryAttribute("tag1")]
+        public virtual void DisplayResourcesMatchingEnteredSkillAndLanguages()
         {
             string[] tagsOfScenario = new string[] {
-                    "regression"};
+                    "tag1"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("login with valid Credentials", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 9
-this.ScenarioInitialize(scenarioInfo);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Display resources matching entered skill and languages", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 7
+  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -106,14 +106,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 8
+    testRunner.Given("I navigate to the homepage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 9
+    testRunner.When("I enter a skill \"<skill>\" into the search bar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 10
- testRunner.Given("navigates to the login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.And("I click the search button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 11
- testRunner.When("enter valid credentials and click the login button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.Then("I should see a list of resources matching the entered skill", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 12
- testRunner.Then("should be redirected to the profile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.When("I click one resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 13
+    testRunner.Then("the results should display relevant languages and skills of the resource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
