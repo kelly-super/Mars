@@ -21,7 +21,7 @@ namespace Mars.Pages
         public By edit_icon;
         public By delete_icon;
         public readonly By update_button = By.XPath("//div[@data-tab=\"second\"]//input[@value=\"Update\"]");
-        public By message_div = By.XPath("//div[@class=\"ns-box-inner\"]");
+      
         public void NavigateToSkillsTab(IWebDriver driver)
         {
 
@@ -31,25 +31,25 @@ namespace Mars.Pages
         }
         public void ClickAddNewButton(IWebDriver driver)
         {
-            //Wait.WaitToBeVisible(driver, language_addNew_button);
+            Wait.WaitToBeVisible(driver, skill_andnew_button);
             driver.FindElement(skill_andnew_button).Click();
         }
 
 
         public void InputSkillDetails(IWebDriver driver, string type, string skill, string level)
         {
-            if (level == "")
+            if (level == ""||level==null)
             {
                 level = "Choose Skill Level";
             }
+            Wait.WaitToBeVisible(driver, add_skill_input);
             if (type == "new")
             {
                 driver.FindElement(add_skill_input).SendKeys(skill);
                 driver.FindElement(skill_Level_dropdown).Click();
                 level_option = By.XPath("//select[@name=\"level\"]//option[text()=\"" + level + "\"]");
                 driver.FindElement(level_option).Click();
-            }
-            else if (type == "edit")
+            }else if (type == "edit")
             {
                 driver.FindElement(add_skill_input).Clear();
                 driver.FindElement(add_skill_input).SendKeys(skill);
@@ -95,14 +95,7 @@ namespace Mars.Pages
             return _count;
         }
 
-        public string GetMessage(IWebDriver driver)
-        {
-            Wait.WaitToBeVisible(driver, message_div);
-            string message = driver.FindElement(message_div).Text;
-            Console.WriteLine(message);
-            return message;
-        }
-
+     
         public void ClearUpAllTheData(IWebDriver driver)
         {
             IReadOnlyCollection<IWebElement> remove_icon = driver.FindElements(By.XPath("//div[@data-tab=\"second\"]//i[@class=\"remove icon\"]"));

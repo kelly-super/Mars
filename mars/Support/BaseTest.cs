@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Mars.Pages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
@@ -72,6 +73,14 @@ namespace Mars.Support
         public void SetUserLoggedIn(bool isLoggedIn)
         {
             _featureContext["IsLoggedIn"] = isLoggedIn;
+        }
+
+        public static void PerformLogin()
+        {
+            string email = GetApplictionConfig("username");
+            string password = GetApplictionConfig("password");
+            LoginPage loginPage = new LoginPage();
+            loginPage.ClickLoginButton(driver, email, password);
         }
     }
 }

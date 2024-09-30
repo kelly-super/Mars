@@ -17,11 +17,14 @@ namespace Mars.Pages
         {
             driver.FindElement(signin_link).Click();
         }
-        public void ClickSearchButton(IWebDriver driver, string search) 
+
+        public void InputSearchString(IWebDriver driver, string search) 
         {
             driver.FindElement(search_input).SendKeys(search);
+        }
+        public void ClickSearchButton(IWebDriver driver) 
+        {         
             driver.FindElement(search_button).Click();
-
         }
 
     }

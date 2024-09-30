@@ -23,21 +23,6 @@ namespace Mars.Hooks
 
         }
 
-        public static void PerformLogin()
-        {
-
-            string url = GetApplictionConfig("url");
-            driver.Navigate().GoToUrl(url);
-            HomePage homePage = new HomePage();
-            homePage.ClickSignInLink(driver);
-
-            string email = GetApplictionConfig("username");
-            string password = GetApplictionConfig("password");
-            LoginPage loginPage = new LoginPage();
-            loginPage.ClickLoginButton(driver, email, password);
-        }
-
-
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario()
         {
@@ -55,6 +40,12 @@ namespace Mars.Hooks
         {
             //Initialize WebDriver only once for the entire feature
             GetWebDriver();
+            string url = GetApplictionConfig("url");
+            driver.Navigate().GoToUrl(url);
+            HomePage homePage = new HomePage();
+            homePage.ClickSignInLink(driver);
+           
+
             // Check if the feature has the @NoBeforeFeature tag
             bool skipBeforeFeature = featureContext.FeatureInfo.Tags.Contains("NoBeforeFeature");
             if (skipBeforeFeature) {

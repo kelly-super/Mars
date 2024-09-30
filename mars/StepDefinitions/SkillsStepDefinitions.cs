@@ -15,6 +15,7 @@ namespace Mars.StepDefinitions
         LoginPage loginPage;
         HomePage homePage;
         SkillsPage skillsPage;
+        ProfilePage profilePage;
         int row_count = 0;
 
         public SkillsStepDefinitions(FeatureContext featureContext) : base(featureContext)
@@ -26,7 +27,6 @@ namespace Mars.StepDefinitions
         public void GivenNavigateToTheSkillsTab()
         {
             skillsPage = new SkillsPage();
-
             skillsPage.NavigateToSkillsTab(driver);
 
         }
@@ -42,13 +42,6 @@ namespace Mars.StepDefinitions
         {
             skillsPage.InputSkillDetails(driver, "new", skill, level);
             skillsPage.ClickAddButton(driver);
-        }
-
-        [Then(@"a ""([^""]*)"" will be displayed to show the result")]
-        public void ThenAWillBeDisplayedToShowTheResult(string message)
-        {
-            string actural_result = skillsPage.GetMessage(driver);
-            Assert.That(actural_result.Contains(message));
         }
 
 
@@ -87,6 +80,15 @@ namespace Mars.StepDefinitions
             skillsPage.ClickDeleteIcon(driver, skill);
         }
 
+        [Then(@"a ""([^""]*)"" will be displayed to show the result")]
+        public void ThenAWillBeDisplayedToShowTheResult(string message)
+        {
+            profilePage = new ProfilePage();
+            string actural_result = profilePage.GetMessage(driver);
+            profilePage.ClickMessageCloseButton(driver);
+            Assert.That(actural_result.Contains(message));
+            
+        }
 
     }
 }

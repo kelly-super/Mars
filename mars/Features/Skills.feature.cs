@@ -80,13 +80,13 @@ namespace Mars.Features
         [NUnit.Framework.DescriptionAttribute("create a new skill")]
         [NUnit.Framework.CategoryAttribute("regression")]
         [NUnit.Framework.TestCaseAttribute("Postman", "", "Please enter skill and experience level", null)]
-        [NUnit.Framework.TestCaseAttribute("Java", "Beginner", "has been added to your skills.", null)]
-        [NUnit.Framework.TestCaseAttribute("java", "Beginner", "This skill is already exist in your skill list.", null)]
-        [NUnit.Framework.TestCaseAttribute("Java", "Beginner", "Duplicated data.", null)]
-        [NUnit.Framework.TestCaseAttribute("C++", "Expert", "has been added to your skills.", null)]
-        [NUnit.Framework.TestCaseAttribute("C#", "Beginner", "has been added to your skills.", null)]
-        [NUnit.Framework.TestCaseAttribute("<script><Div></div></script>", "Intermediate", "has been added to your skills.", null)]
-        [NUnit.Framework.TestCaseAttribute("/348517&^#*%$^(*&@&@##^&@@&", "Intermediate", "has been added to your skills.", null)]
+        [NUnit.Framework.TestCaseAttribute("java", "Beginner", "has been added to your skills", null)]
+        [NUnit.Framework.TestCaseAttribute("Java", "Beginner", "has been added to your skills", null)]
+        [NUnit.Framework.TestCaseAttribute("Java", "Beginner", "Duplicated data", null)]
+        [NUnit.Framework.TestCaseAttribute("C++", "Expert", "has been added to your skills", null)]
+        [NUnit.Framework.TestCaseAttribute("C#", "Beginner", "has been added to your skills", null)]
+        [NUnit.Framework.TestCaseAttribute("<script><Div></div></script>", "Intermediate", "has been added to your skills", null)]
+        [NUnit.Framework.TestCaseAttribute("/348517&^#*%$^(*&@&@##^&@@&", "Intermediate", "has been added to your skills", null)]
         [NUnit.Framework.TestCaseAttribute("", "Expert", "Please enter skill and experience level", null)]
         public virtual void CreateANewSkill(string skill, string level, string message, string[] exampleTags)
         {
@@ -187,8 +187,8 @@ this.ScenarioInitialize(scenarioInfo);
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("user can update a skill")]
         [NUnit.Framework.TestCaseAttribute("java", "java222", "Expert", "has been updated to your skills", null)]
-        [NUnit.Framework.TestCaseAttribute("postman", "java", "Expert", "is already added to your skill list.", null)]
-        [NUnit.Framework.TestCaseAttribute("postman", "Jmeter", "Intermediate", "This skill is already added to your skill list.", null)]
+        [NUnit.Framework.TestCaseAttribute("postman", "java", "Expert", "is already added to your skill list", null)]
+        [NUnit.Framework.TestCaseAttribute("postman", "Jmeter", "Intermediate", "This skill is already added to your skill list", null)]
         public virtual void UserCanUpdateASkill(string skill, string skill_Name, string level, string message, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

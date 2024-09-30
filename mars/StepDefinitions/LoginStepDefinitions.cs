@@ -14,7 +14,7 @@ namespace Mars.StepDefinitions
     public class LoginStepDefinitions: BaseTest
     {
 
-        LoginPage loginPage;
+       
         HomePage homePage;
 
 
@@ -37,10 +37,7 @@ namespace Mars.StepDefinitions
         {
             if (!IsUserLoggedIn())
             {
-                string email = GetApplictionConfig("username");
-                string password = GetApplictionConfig("password");
-                loginPage = new LoginPage();
-                loginPage.ClickLoginButton(driver, email, password);
+                PerformLogin();
                 SetUserLoggedIn(true);
                 Console.WriteLine("User logged in successfully.");
             }
