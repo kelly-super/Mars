@@ -2,6 +2,7 @@
 using Mars.Support;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace Mars.StepDefinitions
         [Given(@"I navigate to the homepage")]
         public void GivenINavigateToTheHomepage()
         {
+            Log.Information("Navigating to the home page");
             string url = GetApplictionConfig("url");
             driver.Navigate().GoToUrl(url);
             homePage = new HomePage();
@@ -54,6 +56,7 @@ namespace Mars.StepDefinitions
         [When(@"I click the ""([^""]*)"" infomation and I have logged in the system")]
         public void WhenIClickTheInfomationAndIHaveLoggedInTheSystem(string seller)
         {
+            Log.Information("When I click the seller's name and I have logged in the system");
             searchPage.ClickSellerName(driver, seller);
             if (!IsUserLoggedIn())
             {

@@ -15,14 +15,17 @@ namespace Mars.Pages
 
         public void ClickLanguagesTab(IWebDriver driver) 
         {
+            Wait.WaitToBeClickable(driver, language_tab);
             driver.FindElement(language_tab).Click();
         }
         public void ClickSkillsTab(IWebDriver driver)
         {
+            Wait.WaitToBeClickable(driver, skill_tab);
             driver.FindElement(skill_tab).Click();
         }
         public void ClickServicesTab(IWebDriver driver)
         {
+            Wait.WaitToBeClickable(driver,service_tab);
             driver.FindElement(service_tab).Click();
         }
        
