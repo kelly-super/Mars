@@ -43,7 +43,7 @@ namespace Mars.Pages
         }
         public void ClickAddNewButton(IWebDriver driver)
         {
-            //Wait.WaitToBeVisible(driver, language_addNew_button);
+            Wait.WaitToBeVisible(driver, language_addNew_button);
             driver.FindElement(language_addNew_button).Click();
         }
 

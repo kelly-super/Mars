@@ -73,7 +73,7 @@ namespace Mars.StepDefinitions
         }
 
         [When(@"the user has (.*) languages")]
-        public void WhenTheUserHasLanguages(int p0)
+        public void WhenTheUserHasLanguages(string p0)
         {
            row_count = languagePage.GetRowCount(driver, "Languages");
             

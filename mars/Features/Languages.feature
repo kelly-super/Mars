@@ -51,9 +51,9 @@ Examples:
 	| language | message                              |
 	| English  | has been deleted from your languages |
 
-Scenario: Restrict language addition when user has 4 languages
+Scenario: user can see the AddNew button when language number less than 4
 	Given navigate to the language tab
-	When the user has exactly 4 languages
+	When the user has 4 languages
 	Then the button should not be visible
-	When the user has fewer than 4 languages
+	When user delete a language
 	Then the button should be visible

@@ -82,5 +82,7 @@ namespace Mars.Support
             LoginPage loginPage = new LoginPage();
             loginPage.ClickLoginButton(driver, email, password);
         }
+
+
     }
 }

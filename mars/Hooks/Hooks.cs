@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Text;
+using AventStack.ExtentReports;
 using Mars.Pages;
 using Mars.Support;
 using OpenQA.Selenium;
@@ -8,7 +9,7 @@ using TechTalk.SpecFlow;
 namespace Mars.Hooks
 {
     [Binding]
-    public sealed class Hooks : BaseTest
+    public class Hooks : BaseTest
     {
         //We will use the [BeforeFeature] and [AfterFeature] hooks to manage WebDriver initialization and login only once for the entire feature. 
 
@@ -22,12 +23,8 @@ namespace Mars.Hooks
         {
             Logger.InitializeLogger();
             Log.Information("Starting test run");
-        }
-        [AfterTestRun]
-        public static void AfterTestRun()
-        {
-            Log.Information("Test run completed");
-            Logger.CloseAndFlushLogger();
+
+            ExtentReport.InitializeReport();
         }
 
         [BeforeScenario("@LoginRequired")]
@@ -46,8 +43,38 @@ namespace Mars.Hooks
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
-            Log.Information("Starting Feature: {scenarioTitle}", scenarioContext.ScenarioInfo.Title);
+            Log.Information("Starting Scenario: {scenarioTitle}", scenarioContext.ScenarioInfo.Title);
+            ExtentReport.CreateTest(scenarioContext.ScenarioInfo.Title);
+            ExtentReport.test.Log(Status.Info, "Starting Scenario:" + scenarioContext.ScenarioInfo.Title);
         }
+        [AfterStep]
+        public void AfterStep(ScenarioContext scenarioContext)
+        {
+            if (scenarioContext.TestError == null)
+            {
+                ExtentReport.test.Log(Status.Pass, scenarioContext.StepContext.StepInfo.Text);
+            }
+            else
+            {
+                string screenshotPath  = ExtentReport.AddScreenshot(driver, scenarioContext);
+                ExtentReport.test.Log(Status.Fail, scenarioContext.StepContext.StepInfo.Text + " - Error: " + scenarioContext.TestError.Message);
+                ExtentReport.test.AddScreenCaptureFromPath(screenshotPath);
+            }
+        }
+
+        [AfterScenario]
+        public void AfterScenario(ScenarioContext scenarioContext)
+        {
+            if (scenarioContext.TestError != null)
+            {
+                ExtentReport.test.Log(Status.Fail, "Scenario Failed");
+            }
+            else
+            {
+                ExtentReport.test.Log(Status.Pass, "Scenario Passed");
+            }
+        }
+
 
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
@@ -88,6 +115,15 @@ namespace Mars.Hooks
                 driver.Quit();
                 driver = null;
             }
+        }
+
+
+        [AfterTestRun]
+        public static void AfterTestRun()
+        {
+            Log.Information("Test run completed");
+            Logger.CloseAndFlushLogger();
+            ExtentReport.ExtentReportTearDown();
         }
     }
 }

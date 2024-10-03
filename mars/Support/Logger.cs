@@ -11,7 +11,10 @@ namespace Mars.Support
     {
         public static void InitializeLogger()
         {
-            string logPath = Path.Combine("D:\\Kelly\\Mars\\Mars", "logs\\testlog.txt");
+            string dir = AppDomain.CurrentDomain.BaseDirectory;
+
+            string logPath = dir.Replace("bin\\Debug\\net6.0", "Logs");
+
             Log.Information("Logging to file: {LogFile}", logPath);
             Log.Logger = new LoggerConfiguration().
                 MinimumLevel.Debug()
