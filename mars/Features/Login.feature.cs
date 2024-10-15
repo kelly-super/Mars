@@ -21,14 +21,12 @@ namespace Mars.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Mars login feature")]
-    [NUnit.Framework.CategoryAttribute("NoBeforeFeature")]
     public partial class MarsLoginFeatureFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "NoBeforeFeature"};
+        private string[] _featureTags = ((string[])(null));
         
 #line 1 "Login.feature"
 #line hidden
@@ -38,8 +36,7 @@ namespace Mars.Features
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Mars login feature", "As a registerred user\r\nI want to log in to the application\r\nSo that i can access " +
-                    "my personalized profile", ProgrammingLanguage.CSharp, new string[] {
-                        "NoBeforeFeature"});
+                    "my personalized profile", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         

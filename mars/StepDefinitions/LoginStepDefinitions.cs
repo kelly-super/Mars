@@ -14,38 +14,41 @@ namespace Mars.StepDefinitions
     public class LoginStepDefinitions: BaseTest
     {
 
-       
-        HomePage homePage;
+
+        private readonly IWebDriver _driver;
+        private readonly LoginPage _loginPage;
+        private readonly HomePage _homePage;
 
 
-        public LoginStepDefinitions(FeatureContext featureContext) : base(featureContext)
+        public LoginStepDefinitions(IWebDriver driver, FeatureContext featureContext) : base(driver,featureContext)
         {
-
+            _driver = driver;
+            _loginPage = new LoginPage(_driver);
+            _homePage = new HomePage(_driver);
         }
 
         [Given(@"navigates to the login page")]
         public void GivenNavigatesToTheLoginPage()
         {
             string url = GetApplictionConfig("url");
-            driver.Navigate().GoToUrl(url);
-            homePage = new HomePage();
-            homePage.ClickSignInLink(driver);
+            _driver.Navigate().GoToUrl(url);
+            _homePage.ClickSignInLink();
         }
 
         [When(@"enter valid credentials and click the login button")]
         public void WhenEnterValidCredentialsAndClickTheLoginButton()
         {
-            if (!IsUserLoggedIn())
-            {
-                PerformLogin();
-                SetUserLoggedIn(true);
-                Console.WriteLine("User logged in successfully.");
-            }
-            else
-            {
-                Console.WriteLine("User is already logged in, skipping login.");
-            }
-           
+            /* if (!IsUserLoggedIn())
+             {
+                 PerformLogin();
+                 SetUserLoggedIn(true);
+                 Console.WriteLine("User logged in successfully.");
+             }
+             else
+             {
+                 Console.WriteLine("User is already logged in, skipping login.");
+             }*/
+            PerformLogin();
         }
 
         [Then(@"should be redirected to the profile page")]
@@ -53,9 +56,9 @@ namespace Mars.StepDefinitions
         {
 
             string profileUrl = GetApplictionConfig("profileUrl");
-            string currentUrl = driver.Url;
+            string currentUrl = _driver.Url;
             Assert.True(profileUrl.Equals(currentUrl));
-            Assert.IsTrue(IsUserLoggedIn(),"user logged in succeeded");
+           // Assert.IsTrue(IsUserLoggedIn(),"user logged in succeeded");
         }
 
     }

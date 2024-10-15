@@ -1,4 +1,4 @@
-﻿@NoBeforeFeature
+﻿
 Feature: Mars login feature
 
 As a registerred user

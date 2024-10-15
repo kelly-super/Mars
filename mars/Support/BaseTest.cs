@@ -12,75 +12,85 @@ using WebDriverManager.DriverConfigs.Impl;
 
 namespace Mars.Support
 {
+  
     public class BaseTest
     {
-        public static IWebDriver driver;
-        private readonly FeatureContext _featureContext;
-        public BaseTest(FeatureContext featureContext)
-        {
+      
+       
+       
+        private  IWebDriver _driver;
+        private LoginPage _loginPage;
+        protected readonly FeatureContext _featureContext;
 
+        public BaseTest(IWebDriver driver,FeatureContext featureContext)
+        {
+            _driver = driver;
+            _loginPage = new LoginPage(_driver);
             _featureContext = featureContext;
-        }
-
-        public static IWebDriver GetWebDriver() 
-        { 
-            if(driver ==null)
-            {
-                GetNewWebDriver(); 
-            }
-            return driver; 
-        }
-
-        public static void GetNewWebDriver()
-        {
-            string browserType = GetApplictionConfig("browserType");
-            switch (browserType.ToLower())
-            {
-                case "chrome":
-                    new DriverManager().SetUpDriver(new ChromeConfig()) ;
-                    driver = new ChromeDriver() ;
-                    break;
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-                case "edge":
-                    driver = new EdgeDriver(); 
-                    break;
-                default: 
-                    driver = new ChromeDriver(); 
-                    break;
-
-            }
-            driver.Manage().Window.Maximize();
-        }
-        public static string GetApplictionConfig(string key)
-        {
-            //get AppConfig.json directory
-
-            string configPath = System.IO.Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory + "../../../").FullName
-                  + "\\Config\\AppConfig.json";
-            string jsonContent = File.ReadAllText(configPath);
-            JObject jsonData = JObject.Parse(jsonContent);
-            return jsonData[key].ToString();
         }
 
         public bool IsUserLoggedIn()
         {
             return _featureContext.ContainsKey("IsLoggedIn") && (bool)_featureContext["IsLoggedIn"];
-
         }
 
         public void SetUserLoggedIn(bool isLoggedIn)
         {
             _featureContext["IsLoggedIn"] = isLoggedIn;
         }
+        public  IWebDriver GetWebDriver() 
+        { 
+            if(_driver ==null)
+            {
+                GetNewWebDriver(); 
+            }
+            return _driver; 
+        }
 
-        public static void PerformLogin()
+        public void GetNewWebDriver()
+        {
+            string browserType = GetApplictionConfig("browserType");
+            switch (browserType.ToLower())
+            {
+                case "chrome":
+                    new DriverManager().SetUpDriver(new ChromeConfig()) ;
+                    _driver = new ChromeDriver() ;
+                    break;
+                case "firefox":
+                    _driver = new FirefoxDriver();
+                    break;
+                case "edge":
+                    _driver = new EdgeDriver(); 
+                    break;
+                default:
+                    _driver = new ChromeDriver(); 
+                    break;
+
+            }
+            _driver.Manage().Window.Maximize();
+        }
+        public string GetApplictionConfig(string key)
+        {
+            //get AppConfig.json directory
+
+            string configPath = System.IO.Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory + "../../../").FullName
+                  + "\\Config\\AppConfig.json";
+
+            if (!File.Exists(configPath))
+            {
+                throw new FileNotFoundException("Config file not found:" + configPath);
+            }
+            string jsonContent = File.ReadAllText(configPath);
+            JObject jsonData = JObject.Parse(jsonContent);
+            return jsonData[key]?.ToString()?? throw new KeyNotFoundException($"Key '{key}' not found in config");
+        }
+
+
+        public void PerformLogin()
         {
             string email = GetApplictionConfig("username");
             string password = GetApplictionConfig("password");
-            LoginPage loginPage = new LoginPage();
-            loginPage.ClickLoginButton(driver, email, password);
+            _loginPage.ClickLoginButton( email, password);
         }
 
 

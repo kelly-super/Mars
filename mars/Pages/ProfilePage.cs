@@ -1,46 +1,54 @@
 ﻿using Mars.Support;
 using OpenQA.Selenium;
+using Serilog;
 using TechTalk.SpecFlow;
 
 namespace Mars.Pages
 {
     public class ProfilePage
     {
-        public readonly By description_text = By.XPath("");
-        public By service_tab = By.XPath("//a[@data-tab=\"first\"]");
-        public By language_tab = By.XPath("//a[@data-tab=\"second\"]");
-        public By skill_tab = By.XPath("//a[@data-tab=\"third\"]");
+        private readonly IWebDriver _driver;
+        public ProfilePage(IWebDriver driver)
+        {
+            _driver = driver;
+        }
+
+        public By service_tab = By.XPath("//a[text()=\"Services\"]");
+        public By language_tab = By.XPath("//a[text()=\"Services\"]");
+        public By skill_tab = By.XPath("//a[text()=\"Skills\"]");
         public By message_div = By.XPath("//div[@class=\"ns-box-inner\"]");
         public By message_close_button = By.XPath("//a[@class=\"ns-close\"]");
 
-        public void ClickLanguagesTab(IWebDriver driver) 
+        public void ClickLanguagesTab() 
         {
-            Wait.WaitToBeClickable(driver, language_tab);
-            driver.FindElement(language_tab).Click();
+            Wait.WaitToBeVisible(_driver, language_tab);
+            _driver.FindElement( language_tab).Click();
         }
-        public void ClickSkillsTab(IWebDriver driver)
+        public void ClickSkillsTab()
         {
-            Wait.WaitToBeClickable(driver, skill_tab);
-            driver.FindElement(skill_tab).Click();
+            Wait.WaitToBeVisible(_driver, skill_tab);
+
+            _driver.FindElement(skill_tab).Click();
         }
-        public void ClickServicesTab(IWebDriver driver)
+        public void ClickServicesTab()
         {
-            Wait.WaitToBeClickable(driver,service_tab);
-            driver.FindElement(service_tab).Click();
+            Wait.WaitToBeVisible(_driver, service_tab);
+               _driver.FindElement( service_tab).Click();
+            
         }
        
 
-        public string GetMessage(IWebDriver driver)
+        public string GetMessage()
         {
-            Wait.WaitToBeVisible(driver, message_div);
-            string message = driver.FindElement(message_div).Text;
-            Console.WriteLine(message);
+            string message = _driver.FindElement( message_div).Text;
+            Log.Information(message);
             return message;
         }
 
-        public void ClickMessageCloseButton(IWebDriver driver)
+        public void ClickMessageCloseButton()
         {
-            driver.FindElement(message_close_button).Click();
+            
+           _driver.FindElement( message_close_button).Click();
         }
     }
 }
